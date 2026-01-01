@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATS Resume Tailor - Professional CV Optimization</title>
+    <meta
+      name="description"
+      content="Transform your CV, generate cover letters, and craft application emails with AI"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233D2B1F'/><path d='M8 10h16M8 16h12M8 22h8' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="logo">
+          <span class="logo-text">ATS Resume Tailor</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="hero">
+        <div class="container">
+          <div class="hero-content">
+            <div class="badge">
+              <span>AI-Powered Optimization</span>
+            </div>
+            <h1>
+              Master Your <span class="accent-text">Career Transition</span>
+            </h1>
+            <p class="hero-description">
+              Professional CV tailoring, cover letter generation, and 
+              email drafting optimized for modern hiring systems.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="app-section">
+        <div class="container">
+          <div class="app-card">
+            <form id="cvForm" class="cv-form">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="jobDescription">
+                    Job Description
+                  </label>
+                  <textarea
+                    id="jobDescription"
+                    name="jobDescription"
+                    placeholder="Paste the target job description here..."
+                    required
+                  ></textarea>
+                  <span class="helper-text"
+                    >Include the full listing for accurate ATS matching</span
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label for="cvFile">
+                    Current CV
+                  </label>
+                  <div class="upload-zone" id="uploadZone">
+                    <input
+                      type="file"
+                      id="cvFile"
+                      name="cv"
+                      accept=".pdf,.docx"
+                      required
+                    />
+                    <div class="upload-content">
+                      <div class="upload-text">
+                        <span class="upload-main"
+                          >Drop your file here or
+                          <span class="browse-link">browse files</span></span
+                        >
+                        <span class="upload-sub">PDF or DOCX format (Max 10MB)</span>
+                      </div>
+                    </div>
+                    <div class="file-info" id="fileInfo">
+                      <span class="file-name" id="fileName"></span>
+                      <button type="button" class="remove-file" id="removeFile">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Options Section -->
+              <div class="options-section">
+                <div class="options-row">
+                  <!-- Document Selection -->
+                  <div class="option-group">
+                    <label class="option-label">
+                      Documents to Generate
+                    </label>
+                    <div class="checkbox-group">
+                      <label class="checkbox-item">
+                        <input type="checkbox" id="generateCV" name="generateCV" checked />
+                        <span class="checkmark"></span>
+                        <span>Tailored CV</span>
+                      </label>
+                      <label class="checkbox-item">
+                        <input type="checkbox" id="generateCoverLetter" name="generateCoverLetter" checked />
+                        <span class="checkmark"></span>
+                        <span>Cover Letter</span>
+                      </label>
+                      <label class="checkbox-item">
+                        <input type="checkbox" id="generateEmail" name="generateEmail" checked />
+                        <span class="checkmark"></span>
+                        <span>Application Email</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Format Selection -->
+                  <div class="option-group">
+                    <label class="option-label">
+                      Output Format
+                    </label>
+                    <div class="format-toggle">
+                      <button type="button" class="format-btn active" data-format="docx">
+                        DOCX
+                      </button>
+                      <button type="button" class="format-btn" data-format="pdf">
+                        PDF
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="submit-btn" id="submitBtn">
+                <span class="btn-content">
+                  <span>Generate Professional Documents</span>
+                </span>
+                <span class="btn-loading">
+                  <span class="spinner"></span>
+                  <span>Optimizing Content...</span>
+                </span>
+              </button>
+            </form>
+
+            <div class="results-section" id="resultsSection">
+              <div class="results-header">
+                <div class="results-title">
+                  <h3>Generation Complete</h3>
+                  <p>Your tailored documents are ready for review and download</p>
+                </div>
+              </div>
+
+              <div class="results-grid" id="resultsGrid">
+                <!-- CV Card -->
+                <div class="result-card" id="cvCard">
+                  <h4>Tailored CV</h4>
+                  <p>Optimized for ATS relevance</p>
+                  <button class="preview-btn" onclick="togglePreview('cv')">
+                    View Preview
+                  </button>
+                  <button class="download-btn" id="downloadCV">
+                    Download CV
+                  </button>
+                  <div class="preview-content" id="previewCV"></div>
+                </div>
+
+                <!-- Cover Letter Card -->
+                <div class="result-card" id="coverLetterCard">
+                  <h4>Cover Letter</h4>
+                  <p>Personalized value proposition</p>
+                  <button
+                    class="preview-btn"
+                    onclick="togglePreview('coverLetter')"
+                  >
+                    View Preview
+                  </button>
+                  <button class="download-btn" id="downloadCoverLetter">
+                    Download Letter
+                  </button>
+                  <div class="preview-content" id="previewCoverLetter"></div>
+                </div>
+
+                <!-- Email Card -->
+                <div class="result-card" id="emailCard">
+                  <h4>Application Email</h4>
+                  <p>Professional outreach draft</p>
+                  <button class="preview-btn" onclick="togglePreview('email')">
+                    View Preview
+                  </button>
+                  <button class="download-btn" id="downloadEmail">
+                    Download Email
+                  </button>
+                  <div class="preview-content" id="previewEmail"></div>
+                </div>
+              </div>
+
+              <button type="button" class="reset-btn" id="resetBtn">
+                Start New Project
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>© <span id="currentYear"></span> ATS Resume Tailor by Cohby Consulting services. Built for professional precision.</p>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast">
+      <span class="toast-message" id="toastMessage"></span>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
